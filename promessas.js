@@ -5,13 +5,13 @@ function trataErro(erro) {
     throw new Error(chalk.red(erro.code, 'Não há file'));
 }
 
-function pegaArquivo(caminhoDoArquivo) {
-    const encoding = 'utf-8';
-    fs.promises
-    .readFile(caminhoDoArquivo, encoding)
-    .then((texto) => chalk.green(console.log(texto)))
-    .catch((erro) => trataErro(erro))
-}
+//function pegaArquivo(caminhoDoArquivo) {
+//    const encoding = 'utf-8';
+//    fs.promises
+//    .readFile(caminhoDoArquivo, encoding)
+//    .then((texto) => chalk.green(console.log(texto)))
+//    .catch((erro) => trataErro(erro))
+//}
 
 pegaArquivo('./arquivos/texto1.md');
 /*
@@ -36,6 +36,7 @@ const promises = endpoints.map(url => fetch(url).then(res => res.json()))
    
 Promise.all(promises)
 .then(body => console.log(body.name))
+// -----------------------------------------
 
 async function getUser(userId) {
     let response = await fetch(`https://api.com/api/user/${userId}`);
@@ -44,8 +45,11 @@ async function getUser(userId) {
 }
    
 let [user1, user2] = await Promise.all([getUser(1), getUser(2)])
+// -----------------------------------------
 
 */
+
+// -----------------------------------------
 function promessa(bool) {
     const x = bool;
     return new Promise((resolve, reject) => {
@@ -63,3 +67,17 @@ function exibeResposta(textoResult) {
 promessa(true)
 .then((texto) => exibeResposta(texto))
    // sucesso na promessa
+
+// ------------------------------------------
+
+async function pegaArquivo(pathFile) {
+    const encoding = 'utf-8';
+    try{
+    const texto = await fs.promises.readFile(pathFile, encoding)
+    console.log(chalk.green(texto))
+    } catch(erro) {
+        trataErro(chalk.red(erro));
+    } finally {
+        console.log(chalk.yellow('operação concluída'));
+      }
+}
